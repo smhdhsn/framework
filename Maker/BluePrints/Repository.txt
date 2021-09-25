@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Repositories;
+
+/**
+ * @author {%author%}
+ * 
+ * @version {%version%}
+ */
+class {%PascalCase%}
+{
+    //
+}

@@ -1,0 +1,16 @@
+{
+    "name": "smhdhsn/zed-core",
+    "description": "ZED is an API-Based Micro-Framework powered by PHP.",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Zed\\Framework\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mahdi Hasani",
+            "email": "m2hdtl@gmail.com"
+        }
+    ]
+}
