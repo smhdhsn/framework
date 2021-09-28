@@ -93,17 +93,17 @@ final class Application
     private function setPath(string $projectRoot): void
     {
         self::$path = [
-            'project' => $projectRoot,
-
-            'framework' => __DIR__,
-            'blueprints' => __DIR__ . '/Maker/BluePrints',
-
-            'models' => $projectRoot . '/App/Models',
-            'commands' => $projectRoot . '/App/Commands',
-            'services' => $projectRoot . '/App/Services',
-            'controllers' => $projectRoot . '/App/Controllers',
-            'repositories' => $projectRoot . '/App/Repositories',
             'migrations' => $projectRoot . '/Database/Migrations',
+            'repositories' => $projectRoot . '/App/Repositories',
+            'controllers' => $projectRoot . '/App/Controllers',
+            'services' => $projectRoot . '/App/Services',
+            'commands' => $projectRoot . '/App/Commands',
+            'models' => $projectRoot . '/App/Models',
+
+            'blueprints' => __DIR__ . '/Maker/BluePrints',
+            'framework' => __DIR__,
+
+            'project' => $projectRoot,
         ];
     }
 
