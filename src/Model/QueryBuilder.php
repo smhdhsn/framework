@@ -90,7 +90,7 @@ class QueryBuilder
      */
     public function setParams(array $params): QueryBuilder
     {
-        $this->params = array_merge($this->params, $params);
+        $this->params = $params;
 
         return $this;
     }

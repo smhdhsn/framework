@@ -13,6 +13,20 @@ use ReflectionClass;
 abstract class Model
 {
     /**
+     * Get model's table name from property "table" inside model's class.
+     * If it's not defined, it'll be gotten from reflection class on called
+     * class's instance.
+     * 
+     * @since 1.0.1
+     * 
+     * @return string
+     */
+    final private function getTable(): string
+    {
+        return $this->table ?? strtolower((new ReflectionClass(static::class))->getShortName());
+    }
+
+    /**
      * Fetch column(s) from database using a key value pairs.
      * 
      * @since 1.0.1
@@ -24,11 +38,9 @@ abstract class Model
      */
     public function where(string $column, string $match): QueryBuilder
     {
-        $model = self::instantiateClass();
-
         return Application::$manager
-            ->setTable($model->getTableName())
-            ->setModel(get_called_class())
+            ->setTable((new static)->getTable())
+            ->setModel(static::class)
             ->where($column, $match);
     }
 
@@ -43,11 +55,9 @@ abstract class Model
      */
     public function find(int $id): Model
     {
-        $model = self::instantiateClass();
-
         return Application::$manager
-            ->setTable($model->getTableName())
-            ->setModel(get_called_class())
+            ->setTable((new static)->getTable())
+            ->setModel(static::class)
             ->find($id);
     }
 
@@ -62,11 +72,9 @@ abstract class Model
      */
     public function create(array $information): Model
     {
-        $model = self::instantiateClass();
-
         return Application::$manager
-            ->setTable($model->getTableName())
-            ->setModel(get_called_class())
+            ->setTable((new static)->getTable())
+            ->setModel(static::class)
             ->create($information);
     }
 
@@ -82,7 +90,7 @@ abstract class Model
     public function update(array $information): bool
     {
         return Application::$manager
-            ->setTable($this->getTableName())
+            ->setTable($this->getTable())
             ->setId($this->id)
             ->update($information);
     }
@@ -97,39 +105,8 @@ abstract class Model
     public function delete(): bool
     {
         return Application::$manager
-            ->setTable($this->getTableName())
+            ->setTable($this->getTable())
             ->setId($this->id)
             ->delete();
-    }
-
-    /**
-     * Instantiate class.
-     * 
-     * @since 1.0.1
-     * 
-     * @return object
-     */
-    private static function instantiateClass(): Model
-    {
-        $class = get_called_class();
-
-        return new $class();
-    }
-
-    /**
-     * Get model's table name from property "table" inside model's instance.
-     * If it's not defined, it'll be gotten from reflection class on called
-     * class's instance.
-     * 
-     * @since 1.0.1
-     * 
-     * @return string
-     */
-    private function getTableName(): string
-    {
-        if ($this->table)
-            return $this->table;
-
-        return strtolower((new ReflectionClass(get_called_class()))->getShortName());
     }
 }
