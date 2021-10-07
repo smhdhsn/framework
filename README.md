@@ -3,7 +3,7 @@
 </p>
 
 ## About
-> **Note:** This repository contains the core code of the ZED Micro-Framework.  
+> **Note:** This repository contains the core code of the ZED.  
 
 ZED is an API-Based Micro-Framework powered by PHP.
 
