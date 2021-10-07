@@ -35,67 +35,35 @@ final class Router
     private ?array $params = [];
 
     /**
-     * Map GET method.
+     * Available HTTP methods.
      * 
      * @since 1.0.1
      * 
-     * @param string $url
-     * @param mixed $callback
-     * @param array|null $middlewares
-     * 
-     * @return void
+     * @var array
      */
-    public function get(string $url, $callback, ?array $middlewares = []): void
-    {
-        $this->saveRoute('get', $url, $callback, $middlewares);
-    }
+    private array $methods = [
+        'get',
+        'post',
+        'put',
+        'patch',
+        'delete',
+    ];
 
     /**
-     * Map POST method.
+     * Map HTTP method.
      * 
      * @since 1.0.1
      * 
-     * @param string $url
-     * @param mixed $callback
-     * @param array|null $middlewares
+     * @param string $method
+     * @param array $arguments
      * 
      * @return void
      */
-    public function post(string $url, $callback, ?array $middlewares = []): void
+    public function __call(string $method, array $arguments): void
     {
-        $this->saveRoute('post', $url, $callback, $middlewares);
-    }
-
-    /**
-     * Map PUT method.
-     * 
-     * @since 1.0.1
-     * 
-     * @param string $url
-     * @param mixed $callback
-     * @param array|null $middlewares
-     * 
-     * @return void
-     */
-    public function put(string $url, $callback, ?array $middlewares = []): void
-    {
-        $this->saveRoute('put', $url, $callback, $middlewares);
-    }
-
-    /**
-     * Map DELETE method.
-     * 
-     * @since 1.0.1
-     * 
-     * @param string $url
-     * @param mixed $callback
-     * @param array|null $middlewares
-     * 
-     * @return void
-     */
-    public function delete(string $url, $callback, ?array $middlewares = []): void
-    {
-        $this->saveRoute('delete', $url, $callback, $middlewares);
+        if (in_array($method, $this->methods)) {
+            $this->saveRoute($method, ...$arguments);
+        }
     }
 
     /**
@@ -110,7 +78,7 @@ final class Router
      * 
      * @return void
      */
-    private function saveRoute(string $method, string $url, $callback, ?array $middlewares): void
+    private function saveRoute(string $method, string $url, $callback, ?array $middlewares = []): void
     {
         $url = '/' . trim($url, '/');
         $temp = &$this->routes[$method];
