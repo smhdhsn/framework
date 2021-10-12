@@ -148,16 +148,16 @@ final class Router
         switch (gettype($callback)) {
             case 'NULL':
                 throw new NotFoundException(Response::INVALID_ROUTE);
-                break;
+
             case 'object':
                 return $this->invokeClosure($callback);
-                break;
+
             case 'string':
                 return $this->invokeString($callback);
-                break;
+
             case 'array':
                 return $this->invokeArray($callback);
-                break;
+
             default:
                 throw new Exception('Invalid callback type.');
         }
